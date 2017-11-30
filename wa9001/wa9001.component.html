@@ -1,0 +1,24 @@
+<app-header [title]="componentTitle" [leftnav]=sidenav></app-header>
+<md-sidenav-container class="sidenav-container" [style.height.px]="height" (window:resize)="onResize($event)">
+  <md-sidenav #sidenav>
+    <app-navbar></app-navbar>
+  </md-sidenav>
+  <md-progress-bar mode="indeterminate" color="{{backgroundColor}}" *ngIf="working"></md-progress-bar>
+  <md-card>
+    <div>
+      <button md-raised-button color="{{backgroundColor}}" [disabled]="working" (click)="onSubmit();">検索</button>
+      <button md-raised-button color="secondary" (click)="reg();">登録</button>
+
+      <md-select class="pull-right" placeholder="表示行数" [(ngModel)]="rowsPerPage" (change)="paginatorRowChange();">
+        <md-option *ngFor="let rows of rowsPerPageModel" [value]="rows.value">
+          {{ rows.viewValue }}
+        </md-option>
+      </md-select>
+    </div>
+    <div style="width: 100%;">
+      <ag-grid-angular #agGrid style="width: 100%; height: 500px;" class="ag-material-seaos" [gridOptions]="gridOptions" rowHeight="40"
+        enableSorting=true enableColResize=true>
+      </ag-grid-angular>
+    </div>
+  </md-card>
+</md-sidenav-container>
